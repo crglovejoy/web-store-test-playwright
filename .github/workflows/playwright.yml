@@ -15,7 +15,7 @@ jobs:
         dotnet-version: 10.0.402
     - name: Build & Install
       run: dotnet build
-    - name: Ensure browsers are installed
+    - name: Install Browsers
       run: pwsh /home/runner/work/web-store-test-playwright/web-store-test-playwright/web-store-test-playwright/bin/Debug/net10.0/playwright.ps1 install --with-deps
-    - name: Run your tests
+    - name: Run tests
       run: dotnet test
