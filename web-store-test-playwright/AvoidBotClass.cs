@@ -5,7 +5,7 @@ using System.Text;
 
 namespace WebStoreTestPlaywright
 {
-    public class AvoidBotClass : PlaywrightTest
+    public class AvoidBotDetection : PlaywrightTest
     {
         private string _baseUrl = null!;
         protected string BaseUrl => _baseUrl;
@@ -19,6 +19,10 @@ namespace WebStoreTestPlaywright
         [OneTimeSetUp]
         public async Task BaseOneTimeSetUp()
         {
+            /* Setup the PlayWright header value overrides so the web site interactions do not look like a test tool to the 
+             * bot detection implementation employed by the web site.
+             */
+
             _baseUrl = Utilities.GetBaseUrl();
 
             _playwright = await Microsoft.Playwright.Playwright.CreateAsync();
@@ -49,12 +53,14 @@ namespace WebStoreTestPlaywright
         [TearDown]
         public async Task BaseTearDown()
         {
+            // Clean up the page resource after each test.
             if (_page != null) await Page.CloseAsync();
         }
 
         [OneTimeTearDown]
         public async Task BaseOneTimeTearDown()
         {
+            // Cleanup our no longer needed resources
             if (_context != null) await _context.CloseAsync();
             if (_browser != null) await _browser.CloseAsync();
             _playwright?.Dispose();
@@ -62,6 +68,8 @@ namespace WebStoreTestPlaywright
 
         protected static float GetRandomThinkTime()
         {
+            // Return a random think time between 2 and 4 seconds to simulate a user thinking about what to do next.
+            // This is to avoid bot detection by the web site.
             return (float)_rnd.Next(2000, 4000);
         }
     }
