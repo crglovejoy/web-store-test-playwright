@@ -5,7 +5,7 @@ namespace WebStoreTestPlaywright
 {
     [Parallelizable(ParallelScope.Self)]
     [TestFixture]
-    public class BuyPlasticCupsTest : AvoidBotClass
+    public class BuyPlasticCupsTest : AvoidBotDetection
     {
 
         [Test]
